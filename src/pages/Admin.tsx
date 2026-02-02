@@ -94,7 +94,8 @@ export function Admin() {
     setAudioUrl,
     exportToJson,
     importFromJson,
-    saveToLocalStorage
+    saveToLocalStorage,
+    saveImageToFile
   } = useStory();
 
   const [newImageUrl, setNewImageUrl] = useState('');
@@ -131,19 +132,26 @@ export function Admin() {
     setHasChanges(true);
   };
 
-  // 이미지 파일을 Base64로 변환
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, sceneId?: number) => {
+  // 이미지 파일 업로드 및 저장
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, sceneId?: number) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = (event) => {
+    reader.onload = async (event) => {
       const base64 = event.target?.result as string;
+      
       if (sceneId !== undefined) {
-        updateScene(sceneId, { imageUrl: base64 });
+        // 기존 장면 이미지 교체 - 파일로 저장
+        const timestamp = Date.now();
+        const ext = file.name.split('.').pop() || 'png';
+        const filename = `scene_${sceneId}_${timestamp}.${ext}`;
+        const imagePath = await saveImageToFile(base64, filename);
+        updateScene(sceneId, { imageUrl: imagePath });
         trackChange();
-        showSaveToast('이미지가 교체되었습니다!');
+        showSaveToast('이미지가 저장되었습니다!');
       } else {
+        // 새 장면 - 임시로 base64 저장, 추가 시 파일로 변환
         setNewImageUrl(base64);
       }
     };
@@ -169,14 +177,27 @@ export function Admin() {
   };
 
   // 새 장면 추가
-  const handleAddScene = () => {
+  const handleAddScene = async () => {
     if (!newImageUrl || !newText.trim()) {
       alert('이미지와 텍스트를 모두 입력해주세요.');
       return;
     }
 
+    // 새 장면 ID 계산
+    const newId = storyData.scenes.length > 0 
+      ? Math.max(...storyData.scenes.map(s => s.id)) + 1 
+      : 1;
+    
+    // 이미지를 파일로 저장
+    let imagePath = newImageUrl;
+    if (newImageUrl.startsWith('data:image')) {
+      const timestamp = Date.now();
+      const filename = `scene_${newId}_${timestamp}.png`;
+      imagePath = await saveImageToFile(newImageUrl, filename);
+    }
+
     addScene({
-      imageUrl: newImageUrl,
+      imageUrl: imagePath,
       text: newText.trim()
     });
 

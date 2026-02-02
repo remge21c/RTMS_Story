@@ -24,4 +24,5 @@ export interface StoryContextType {
   loadFromLocalStorage: () => void;
   exportToJson: () => void;
   importFromJson: (jsonString: string) => void;
+  saveImageToFile: (base64Data: string, filename: string) => Promise<string>;
 }

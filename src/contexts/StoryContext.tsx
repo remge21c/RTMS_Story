@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useRef } from 'react';
 import type { ReactNode } from 'react';
 import type { StoryData, StoryContextType, Scene } from '../types';
 
@@ -17,25 +17,11 @@ const StoryContext = createContext<StoryContextType | undefined>(undefined);
 // Provider 컴포넌트
 export function StoryProvider({ children }: { children: ReactNode }) {
   const [storyData, setStoryData] = useState<StoryData>(defaultStoryData);
+  const isInitialLoad = useRef(true);
 
-  // 컴포넌트 마운트 시 데이터 로드
+  // 컴포넌트 마운트 시 데이터 로드 (항상 파일에서 로드)
   useEffect(() => {
     const loadData = async () => {
-      // 먼저 로컬스토리지에서 로드 시도
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
-          if (parsed.scenes && parsed.scenes.length > 0) {
-            setStoryData(parsed);
-            return;
-          }
-        } catch (error) {
-          console.error('로컬스토리지 파싱 실패:', error);
-        }
-      }
-      
-      // 로컬스토리지에 데이터가 없으면 초기 JSON 파일에서 로드
       try {
         const response = await fetch('/data/scenes.json');
         if (response.ok) {
@@ -45,15 +31,23 @@ export function StoryProvider({ children }: { children: ReactNode }) {
       } catch (error) {
         console.error('초기 데이터 로드 실패:', error);
       }
+      // 초기 로드 완료 후 플래그 변경
+      setTimeout(() => {
+        isInitialLoad.current = false;
+      }, 500);
     };
     
     loadData();
   }, []);
 
-  // 데이터 변경 시 자동 저장
+  // 데이터 변경 시 자동으로 파일에 저장
   useEffect(() => {
+    // 초기 로드 중에는 저장하지 않음
+    if (isInitialLoad.current) return;
+    
     if (storyData.scenes.length > 0 || storyData.audioUrl) {
       saveToLocalStorage();
+      saveToFile(); // 파일에도 자동 저장
     }
   }, [storyData]);
 
@@ -77,6 +71,41 @@ export function StoryProvider({ children }: { children: ReactNode }) {
     } catch (error) {
       console.error('로컬스토리지 저장 실패:', error);
     }
+  };
+
+  // 서버 파일에 저장 (scenes.json)
+  const saveToFile = async () => {
+    try {
+      const response = await fetch('/api/save-scenes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(storyData)
+      });
+      if (response.ok) {
+        console.log('✅ scenes.json 파일 저장 완료');
+      }
+    } catch (error) {
+      console.error('파일 저장 실패:', error);
+    }
+  };
+
+  // 이미지를 파일로 저장하고 경로 반환
+  const saveImageToFile = async (base64Data: string, filename: string): Promise<string> => {
+    try {
+      const response = await fetch('/api/save-image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filename, base64Data })
+      });
+      if (response.ok) {
+        const result = await response.json();
+        console.log('✅ 이미지 파일 저장 완료:', result.path);
+        return result.path;
+      }
+    } catch (error) {
+      console.error('이미지 저장 실패:', error);
+    }
+    return base64Data; // 실패 시 base64 그대로 반환
   };
 
   // 장면 추가
@@ -158,7 +187,8 @@ export function StoryProvider({ children }: { children: ReactNode }) {
     saveToLocalStorage,
     loadFromLocalStorage,
     exportToJson,
-    importFromJson
+    importFromJson,
+    saveImageToFile
   };
 
   return (
