@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+/* 기본 스타일 리셋 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+}
+
+/* 스토리북 뷰어 페이지에서만 스크롤 방지 */
+.no-scroll {
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 스토리 텍스트용 명조체 */
+.story-text {
+  font-family: 'Noto Serif KR', serif;
+}
+
+/* 드롭캡 효과 - 첫 글자 크게 */
+.story-text::first-letter {
+  float: left;
+  font-size: 2.5em;
+  line-height: 1;
+  padding-right: 8px;
+  padding-top: 4px;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* Swiper 커스텀 스타일 */
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 모달 애니메이션 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* 토스트 애니메이션 */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
