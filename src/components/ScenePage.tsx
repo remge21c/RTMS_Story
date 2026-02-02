@@ -4,11 +4,11 @@ import { useOrientation } from '../hooks/useOrientation';
 interface ScenePageProps {
   scene: Scene;
   pageNumber: number;
-  totalPages: number;
+  totalPages?: number;
 }
 
 // 개별 장면 페이지 컴포넌트
-export function ScenePage({ scene, pageNumber, totalPages }: ScenePageProps) {
+export function ScenePage({ scene, pageNumber }: ScenePageProps) {
   const orientation = useOrientation();
   const isLandscape = orientation === 'landscape';
 
