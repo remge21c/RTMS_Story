@@ -9,6 +9,38 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- 카카오톡 인앱 브라우저 감지 및 외부 브라우저로 열기 -->
+    <script>
+      (function() {
+        var userAgent = navigator.userAgent.toLowerCase();
+        var target_url = location.href;
+        
+        // 카카오톡 인앱 브라우저 감지
+        if (userAgent.match(/kakaotalk/i)) {
+          // 안드로이드
+          if (userAgent.match(/android/i)) {
+            location.href = 'intent://' + target_url.replace(/https?:\/\//i, '') + 
+              '#Intent;scheme=https;package=com.android.chrome;end';
+          }
+          // iOS - 사파리로 열기 유도
+          else if (userAgent.match(/iphone|ipad|ipod/i)) {
+            // iOS는 직접 외부 브라우저로 열 수 없어서 안내 메시지 표시
+            var wrapper = document.createElement('div');
+            wrapper.id = 'kakao-guide';
+            wrapper.innerHTML = '<div style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);z-index:9999;display:flex;align-items:center;justify-content:center;">' +
+              '<div style="background:white;padding:30px;border-radius:16px;text-align:center;margin:20px;max-width:320px;">' +
+              '<p style="font-size:16px;color:#333;margin-bottom:20px;line-height:1.6;">더 나은 화면으로 보려면<br><strong>Safari로 열기</strong>를 선택해주세요</p>' +
+              '<p style="font-size:14px;color:#666;margin-bottom:15px;">우측 상단 <strong>⋮</strong> 또는 <strong>···</strong> 메뉴에서<br>"다른 브라우저로 열기"를 선택하세요</p>' +
+              '<button onclick="document.getElementById(\'kakao-guide\').remove()" style="background:#FEE500;border:none;padding:12px 30px;border-radius:8px;font-size:14px;font-weight:bold;cursor:pointer;">확인</button>' +
+              '</div></div>';
+            document.addEventListener('DOMContentLoaded', function() {
+              document.body.appendChild(wrapper);
+            });
+          }
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
