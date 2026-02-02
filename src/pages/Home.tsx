@@ -83,7 +83,7 @@ export function Home() {
             </div>
 
             {/* 모달 바디 */}
-            <div className="p-8">
+            <div className="px-[15%] py-8">
               <div className="relative mb-6">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                   <svg className={`w-6 h-6 ${error ? 'text-red-400' : 'text-gray-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
