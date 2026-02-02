@@ -49,8 +49,8 @@ export function ScenePage({ scene, pageNumber }: ScenePageProps) {
             />
           </div>
           
-          {/* 텍스트 영역 - 세로 가운데 정렬, 내부 여백 20px */}
-          <div className="flex-1 flex items-center overflow-y-auto">
+          {/* 텍스트 영역 - 상단 정렬, 내부 여백 20px */}
+          <div className="flex-1 flex items-start overflow-y-auto">
             <div style={{ margin: '20px', width: 'calc(100% - 40px)' }}>
               <p className="story-text text-[15px] lg:text-[25px] text-gray-700 leading-loose whitespace-pre-wrap text-left">
                 {scene.text}
