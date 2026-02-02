@@ -30,7 +30,7 @@ export function ScenePage({ scene, pageNumber }: ScenePageProps) {
           {/* 텍스트 영역 - 세로 가운데 정렬, 내부 여백 20px */}
           <div className="h-full flex-1 flex items-center overflow-y-auto">
             <div style={{ margin: '20px', width: 'calc(100% - 40px)' }}>
-              <p className="story-text text-[20px] lg:text-[25px] text-gray-700 leading-loose whitespace-pre-wrap text-left">
+              <p className="story-text text-[17px] lg:text-[25px] text-gray-700 leading-loose whitespace-pre-wrap text-left">
                 {scene.text}
               </p>
             </div>
@@ -52,7 +52,7 @@ export function ScenePage({ scene, pageNumber }: ScenePageProps) {
           {/* 텍스트 영역 - 상단 정렬, 내부 여백 20px */}
           <div className="flex-1 flex items-start overflow-y-auto">
             <div style={{ margin: '20px', width: 'calc(100% - 40px)' }}>
-              <p className="story-text text-[20px] lg:text-[25px] text-gray-700 leading-loose whitespace-pre-wrap text-left">
+              <p className="story-text text-[17px] lg:text-[25px] text-gray-700 leading-loose whitespace-pre-wrap text-left">
                 {scene.text}
               </p>
             </div>

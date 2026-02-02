@@ -404,49 +404,52 @@ export function Admin() {
             </h2>
           </div>
           <div className="p-8 space-y-10">
-            {/* 이미지 업로드 */}
-            <div className="space-y-4">
-              <label className="block text-base font-bold text-gray-700">
-                🖼️ 이미지 선택
-              </label>
-              <div className="relative group cursor-pointer">
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleImageUpload(e)}
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                />
-                <div className={`flex flex-col items-center justify-center aspect-video rounded-xl border-2 border-dashed transition-all ${newImageUrl ? 'border-blue-400 bg-blue-50' : 'border-gray-300 bg-gray-50 hover:bg-blue-50 hover:border-blue-400'}`}>
-                  {newImageUrl ? (
-                    <img
-                      src={newImageUrl}
-                      alt="미리보기"
-                      className="w-full h-full object-contain rounded-lg p-2"
-                    />
-                  ) : (
-                    <div className="text-center py-8">
-                      <svg className="w-12 h-12 text-gray-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                      <p className="font-medium text-gray-500">클릭하여 이미지 업로드</p>
-                    </div>
-                  )}
+            {/* 이미지 업로드 & 텍스트 입력 컨테이너 */}
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+              {/* 이미지 업로드 */}
+              <div className="lg:w-5/12 space-y-4">
+                <label className="block text-base font-bold text-gray-700">
+                  🖼️ 이미지 선택
+                </label>
+                <div className="relative group cursor-pointer h-full">
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleImageUpload(e)}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                  />
+                  <div className={`flex flex-col items-center justify-center aspect-video w-full h-full min-h-[250px] rounded-xl border-2 border-dashed transition-all ${newImageUrl ? 'border-blue-400 bg-blue-50' : 'border-gray-300 bg-gray-50 hover:bg-blue-50 hover:border-blue-400'}`}>
+                    {newImageUrl ? (
+                      <img
+                        src={newImageUrl}
+                        alt="미리보기"
+                        className="w-full h-full object-contain rounded-lg p-2"
+                      />
+                    ) : (
+                      <div className="text-center py-8">
+                        <svg className="w-12 h-12 text-gray-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <p className="font-medium text-gray-500">클릭하여 이미지 업로드</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* 텍스트 입력 */}
-            <div className="space-y-4">
-              <label className="block text-base font-bold text-gray-700">
-                ✏️ 스토리 내용
-              </label>
-              <textarea
-                value={newText}
-                onChange={(e) => setNewText(e.target.value)}
-                className="w-full min-h-[180px] border-2 border-gray-200 rounded-xl p-5 text-base leading-relaxed focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all resize-none bg-gray-50 focus:bg-white"
-                placeholder="여기에 이야기 내용을 입력하세요..."
-              />
+              {/* 텍스트 입력 */}
+              <div className="lg:w-7/12 space-y-4 flex flex-col">
+                <label className="block text-base font-bold text-gray-700">
+                  ✏️ 스토리 내용
+                </label>
+                <textarea
+                  value={newText}
+                  onChange={(e) => setNewText(e.target.value)}
+                  className="w-full h-full min-h-[250px] border-2 border-gray-200 rounded-xl p-5 text-base leading-relaxed focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all resize-none bg-gray-50 focus:bg-white"
+                  placeholder="여기에 이야기 내용을 입력하세요..."
+                />
+              </div>
             </div>
 
             {/* 추가 버튼 */}
@@ -528,45 +531,47 @@ export function Admin() {
                       </div>
                     </div>
 
-                    {/* 이미지 영역 */}
-                    <div className="mb-6">
-                      <div className="bg-gray-100 rounded-lg p-3 aspect-video flex items-center justify-center mb-3">
-                        <img
-                          key={`img-${scene.id}-${scene.imageUrl.slice(-20)}`}
-                          src={scene.imageUrl}
-                          alt={`장면 ${index + 1}`}
-                          className="max-w-full max-h-full object-contain rounded"
+                    <div className="flex flex-col lg:flex-row gap-8">
+                      {/* 이미지 영역 */}
+                      <div className="lg:w-5/12">
+                        <div className="bg-gray-100 rounded-lg p-3 aspect-video flex items-center justify-center mb-3">
+                          <img
+                            key={`img-${scene.id}-${scene.imageUrl.slice(-20)}`}
+                            src={scene.imageUrl}
+                            alt={`장면 ${index + 1}`}
+                            className="max-w-full max-h-full object-contain rounded"
+                          />
+                        </div>
+                        <label className="block cursor-pointer">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleImageUpload(e, scene.id)}
+                            className="hidden"
+                            key={`input-${scene.id}`}
+                          />
+                          <div className="flex items-center justify-center gap-2 py-3 px-4 bg-gray-100 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-200 transition-all">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            이미지 교체
+                          </div>
+                        </label>
+                      </div>
+
+                      {/* 텍스트 영역 */}
+                      <div className="lg:w-7/12 flex flex-col">
+                        <label className="block text-sm font-medium text-gray-600 mb-2">스토리 내용</label>
+                        <textarea
+                          value={scene.text}
+                          onChange={(e) => {
+                            updateScene(scene.id, { text: e.target.value });
+                            trackChange();
+                          }}
+                          placeholder="장면의 내용을 입력하세요..."
+                          className="w-full h-full min-h-[250px] border border-gray-200 rounded-lg p-4 focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all resize-none bg-white text-base leading-relaxed"
                         />
                       </div>
-                      <label className="block cursor-pointer">
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleImageUpload(e, scene.id)}
-                          className="hidden"
-                          key={`input-${scene.id}`}
-                        />
-                        <div className="flex items-center justify-center gap-2 py-2 px-4 bg-gray-100 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-200 transition-all">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>
-                          이미지 교체
-                        </div>
-                      </label>
-                    </div>
-
-                    {/* 텍스트 영역 */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-600 mb-2">스토리 내용</label>
-                      <textarea
-                        value={scene.text}
-                        onChange={(e) => {
-                          updateScene(scene.id, { text: e.target.value });
-                          trackChange();
-                        }}
-                        placeholder="장면의 내용을 입력하세요..."
-                        className="w-full border border-gray-200 rounded-lg p-4 focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all resize-none bg-white text-base leading-relaxed min-h-[120px]"
-                      />
                     </div>
                   </div>
                 ))}
