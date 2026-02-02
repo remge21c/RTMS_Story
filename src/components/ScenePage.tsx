@@ -31,7 +31,7 @@ export function ScenePage({ scene, pageNumber }: ScenePageProps) {
           <div className="h-full flex-1 flex items-center justify-center p-6 lg:p-10 overflow-y-auto">
             <div className="max-w-2xl px-8 lg:px-12">
               {/* 텍스트 내용 (글자는 왼쪽 정렬) */}
-              <p className="story-text text-[20px] md:text-[30px] text-gray-700 leading-loose whitespace-pre-wrap text-left">
+              <p className="story-text text-[15px] lg:text-[25px] text-gray-700 leading-loose whitespace-pre-wrap text-left">
                 {scene.text}
               </p>
             </div>
@@ -54,7 +54,7 @@ export function ScenePage({ scene, pageNumber }: ScenePageProps) {
           <div className="flex-1 flex items-center justify-center px-8 sm:px-12 md:px-16 py-4 sm:py-6 overflow-y-auto">
             <div className="max-w-lg px-6 sm:px-8">
               {/* 텍스트 내용 (글자는 왼쪽 정렬) */}
-              <p className="story-text text-[20px] md:text-[30px] text-gray-700 leading-loose whitespace-pre-wrap text-left">
+              <p className="story-text text-[15px] lg:text-[25px] text-gray-700 leading-loose whitespace-pre-wrap text-left">
                 {scene.text}
               </p>
             </div>

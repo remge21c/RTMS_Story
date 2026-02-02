@@ -28,17 +28,6 @@ body {
   font-family: 'Noto Serif KR', serif;
 }
 
-/* 드롭캡 효과 - 첫 글자 크게 */
-.story-text::first-letter {
-  float: left;
-  font-size: 2.5em;
-  line-height: 1;
-  padding-right: 8px;
-  padding-top: 4px;
-  font-weight: 600;
-  color: #374151;
-}
-
 /* Swiper 커스텀 스타일 */
 .swiper {
   width: 100%;
