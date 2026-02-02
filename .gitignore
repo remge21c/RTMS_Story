@@ -115,4 +115,4 @@ dist
 .pnp.*
 
 # Data files (local storage)
-public/data/scenes.json
+# public/data/scenes.json
