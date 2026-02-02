@@ -27,9 +27,9 @@ export function ScenePage({ scene, pageNumber }: ScenePageProps) {
             />
           </div>
           
-          {/* 텍스트 영역 - 내부 여백 10px */}
-          <div className="h-full flex-1 flex items-center justify-center p-[10px] overflow-y-auto">
-            <div className="max-w-2xl">
+          {/* 텍스트 영역 - 너비 100%, 내부 여백 20px */}
+          <div className="h-full flex-1 flex items-center justify-center p-[20px] overflow-y-auto">
+            <div className="w-full">
               {/* 텍스트 내용 (글자는 왼쪽 정렬) */}
               <p className="story-text text-[15px] lg:text-[25px] text-gray-700 leading-loose whitespace-pre-wrap text-left">
                 {scene.text}
@@ -50,9 +50,9 @@ export function ScenePage({ scene, pageNumber }: ScenePageProps) {
             />
           </div>
           
-          {/* 텍스트 영역 - 내부 여백 10px */}
-          <div className="flex-1 flex items-center justify-center p-[10px] overflow-y-auto">
-            <div className="max-w-lg">
+          {/* 텍스트 영역 - 너비 100%, 내부 여백 20px */}
+          <div className="flex-1 flex items-center justify-center p-[20px] overflow-y-auto">
+            <div className="w-full">
               {/* 텍스트 내용 (글자는 왼쪽 정렬) */}
               <p className="story-text text-[15px] lg:text-[25px] text-gray-700 leading-loose whitespace-pre-wrap text-left">
                 {scene.text}
